@@ -1,0 +1,69 @@
+#include<stdio.h>
+typedef struct mylist
+{
+  int data;
+  struct mylist *next;
+}node;
+void insert(struct mylist *s,int data)
+{
+
+  while(s->next!=NULL)
+  {
+    s=s->next;
+  }
+
+  s->next=(node*)malloc(sizeof(node));
+  s->next->data= data;
+  s->next->next= NULL;
+}
+
+void insertmid(struct mylist *s,int newdata,int previousdata)
+{
+  while(s->data!=previousdata)
+  {
+     s=s->next;
+  }
+  int *temp= s->next;
+  s->next=(node*)malloc(sizeof(node));
+  s->next->data=newdata;
+  s->next->next=temp;
+
+
+}
+
+void display(struct mylist *s)
+{
+  while(s->next!=NULL)
+  {
+     printf("%d ",s->next->data);
+     s=s->next;
+
+  }
+   return;
+
+}
+
+int main()
+{
+ node *head=(node*)malloc(sizeof(node));
+ head->next=NULL;
+
+ int data,n;
+ scanf("%d",&n);
+
+
+
+ for(int i=0;i<n;i++)
+ {
+     scanf("%d",&data);
+     insert(head,data);
+
+
+ }
+ insertmid(head,9,3);
+
+ display(head);
+
+
+return 0;
+}
