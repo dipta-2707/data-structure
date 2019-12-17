@@ -1,0 +1,89 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct myList
+{
+    int data;
+    struct myList *next,*prev;
+}node;
+
+void insert(node* s,int data)
+{
+    while(s->next != NULL)
+    {
+        s = s->next;
+    }
+    s->next = (node*) malloc(sizeof(node));
+    s->next->data = data;
+    s->next->next = NULL;
+    s->next->prev = s;
+}
+void insertAtMid(node *s,int key,int position)
+{
+    node *temp;
+    while(s->data != position)
+    {
+        s = s->next;
+    }
+    temp = s->next;
+    s->next = (node*) malloc(sizeof(node));
+    s->next->data = key;
+    s->next->next = temp;
+    s->next->prev = s;
+    s->next->next->prev = s->next;
+}
+void insertAtFirst(node *s,int data)
+{
+    node* temp;
+    temp = s->next;
+    s->next = (node*) malloc(sizeof(node));
+    s->next->data = data;
+    s->next->next = temp;
+    s->next->prev = s;
+    s->next->next->prev = s->next;
+}
+void display(node* s)
+{
+    while(s->next != NULL)
+    {
+        printf("%d ",s->next->data);
+        s = s->next;
+    }
+    printf("\n\n");
+    while(s->prev != NULL)
+    {
+        printf("%d ",s->data);
+        s = s->prev;
+    }
+    printf("\n\n");
+}
+void deletion(node *s,int data)
+{
+    while(s->next->data != data)
+    {
+        s = s->next;
+    }
+    s->next = s->next->next;
+    s->next->prev = s;
+}
+
+void main()
+{
+    node *head ;
+    head = (node*) malloc(sizeof(node));
+    head->next = NULL;
+    head->prev = NULL;
+    insert(head,2);
+    insert(head,3);
+    insert(head,4);
+    insert(head,5);
+
+    display(head);
+
+    insertAtMid(head,9,3);
+    display(head);
+    insertAtFirst(head,1);
+    insertAtFirst(head,0);
+    display(head);
+    deletion(head,9);
+    display(head);
+}
